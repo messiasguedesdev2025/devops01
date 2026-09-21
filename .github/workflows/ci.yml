@@ -21,20 +21,22 @@ jobs:
           java-version: '21'
 
       - name: Construir com Maven
-        run: mvn -B clean package --file pom.xml
+        run: mvn -B clean package
+        working-directory: demo
 
       - name: Executar testes
         run: mvn test
+        working-directory: demo
 
       - name: Salvar artefato
         uses: actions/upload-artifact@v4
         with:
           name: pacote-aplicacao
-          path: target/*.jar
+          path: demo/target/*.jar
 
       - name: Salvar logs de teste
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: logs-de-teste
-          path: target/surefire-reports/*.xml
+          path: demo/target/surefire-reports/*.xml
